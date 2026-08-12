@@ -66,9 +66,9 @@ export const HeroSection: React.FC = () => {
             inactiveTransition="transform 0.6s ease-in-out"
           >
             <img
-              src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-              alt="Gaurav Kushwaha 3D Portrait"
-              className="w-[220px] sm:w-[320px] md:w-[420px] lg:w-[500px] h-auto object-contain pointer-events-none drop-shadow-2xl max-w-[85vw]"
+              src="/assets/hero_goku.png"
+              alt="Gaurav Kushwaha Flying Nimbus Hero"
+              className="w-[240px] sm:w-[340px] md:w-[440px] lg:w-[520px] h-auto object-contain pointer-events-none drop-shadow-2xl max-w-[85vw]"
             />
           </Magnet>
         </FadeIn>
