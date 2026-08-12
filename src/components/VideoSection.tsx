@@ -63,7 +63,7 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
             style={{ fontSize: 'clamp(2.5rem, 9vw, 140px)' }}
             className="hero-heading font-black uppercase text-center leading-none tracking-tight mb-8 sm:mb-14 select-none"
           >
-            Featured Reel
+            Inspirational Reel
           </h2>
         </FadeIn>
 
