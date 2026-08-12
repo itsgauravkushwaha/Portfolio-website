@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { FadeIn } from './FadeIn';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
@@ -15,24 +15,39 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
+  useEffect(() => {
+    // Attempt muted autoplay on mount
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((err) => {
+        console.warn("Autoplay prevented:", err);
+        setIsPlaying(false);
+      });
+    }
+  }, []);
+
   const togglePlay = () => {
     if (!videoRef.current) return;
     if (isPlaying) {
       videoRef.current.pause();
-      setIsPlaying(false);
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(console.error);
     }
   };
 
-  const toggleMute = () => {
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!videoRef.current) return;
     videoRef.current.muted = !isMuted;
     setIsMuted(!isMuted);
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!videoRef.current) return;
     if (videoRef.current.requestFullscreen) {
       videoRef.current.requestFullscreen();
@@ -85,29 +100,34 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
               </div>
             </div>
 
-            {/* Video Screen Container */}
-            <div className="relative w-full h-[260px] sm:h-[400px] md:h-[520px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#000000] flex items-center justify-center border border-white/10">
+            {/* Video Screen Container - Clickable */}
+            <div
+              onClick={togglePlay}
+              className="relative w-full h-[260px] sm:h-[400px] md:h-[520px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#000000] flex items-center justify-center border border-white/10 cursor-pointer"
+            >
               <video
                 ref={videoRef}
                 poster={posterSrc}
-                src={videoSrc}
                 loop
                 muted={isMuted}
                 playsInline
-                className="w-full h-full object-cover object-center"
-                onEnded={() => setIsPlaying(false)}
-              />
+                autoPlay
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                className="w-full h-full object-cover object-center pointer-events-none"
+              >
+                <source src={videoSrc} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
               {/* Play / Pause Overlay Button */}
-              <button
-                onClick={togglePlay}
-                className={`absolute p-5 sm:p-6 rounded-full bg-[#D7E2EA] text-[#0C0C0C] shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 z-20 flex items-center justify-center ${
+              <div
+                className={`absolute p-5 sm:p-6 rounded-full bg-[#D7E2EA] text-[#0C0C0C] shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 z-20 flex items-center justify-center pointer-events-none ${
                   isPlaying ? 'opacity-0 group-hover:opacity-90' : 'opacity-100'
                 }`}
-                aria-label={isPlaying ? "Pause video" : "Play video"}
               >
                 {isPlaying ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current ml-1" />}
-              </button>
+              </div>
             </div>
           </div>
         </FadeIn>
