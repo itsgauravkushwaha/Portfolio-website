@@ -27,13 +27,6 @@ export const Magnet: React.FC<MagnetProps> = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (!magnetRef.current) return;
 
-      // Disable magnetic tracking on mobile or touch devices for stability
-      if (window.innerWidth < 640 || window.matchMedia('(pointer: coarse)').matches) {
-        setIsHovered(false);
-        setPosition({ x: 0, y: 0 });
-        return;
-      }
-
       const rect = magnetRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -41,7 +34,6 @@ export const Magnet: React.FC<MagnetProps> = ({
       const distanceX = e.clientX - centerX;
       const distanceY = e.clientY - centerY;
 
-      // Check if mouse is within padding boundary of element
       const isWithinPadding =
         e.clientX >= rect.left - padding &&
         e.clientX <= rect.right + padding &&
@@ -60,8 +52,37 @@ export const Magnet: React.FC<MagnetProps> = ({
       }
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!magnetRef.current || e.touches.length === 0) return;
+      const touch = e.touches[0];
+
+      const rect = magnetRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const distanceX = touch.clientX - centerX;
+      const distanceY = touch.clientY - centerY;
+
+      setIsHovered(true);
+      setPosition({
+        x: Math.min(Math.max(distanceX / (strength * 1.5), -40), 40),
+        y: Math.min(Math.max(distanceY / (strength * 1.5), -40), 40),
+      });
+    };
+
+    const handleTouchEnd = () => {
+      setIsHovered(false);
+      setPosition({ x: 0, y: 0 });
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
   }, [padding, strength]);
 
   return (
