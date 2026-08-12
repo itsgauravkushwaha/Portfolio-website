@@ -56,19 +56,19 @@ export const HeroSection: React.FC = () => {
         </FadeIn>
       </div>
 
-      {/* 3. Hero Portrait (Centered magnet overlay) */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10 pointer-events-auto max-w-full">
-        <FadeIn delay={0.6} y={30}>
+      {/* 3. Hero Character (Goku Flying Nimbus - Fully Responsive across all devices) */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-[46%] -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10 pointer-events-auto max-w-full flex justify-center">
+        <FadeIn delay={0.6} y={30} className="flex justify-center w-full">
           <Magnet
             padding={150}
-            strength={3}
+            strength={3.5}
             activeTransition="transform 0.3s ease-out"
             inactiveTransition="transform 0.6s ease-in-out"
           >
             <img
               src="/assets/hero_goku.png"
               alt="Gaurav Kushwaha Flying Nimbus Hero"
-              className="w-[240px] sm:w-[340px] md:w-[440px] lg:w-[520px] h-auto object-contain pointer-events-none drop-shadow-2xl max-w-[85vw]"
+              className="w-[190px] min-[400px]:w-[230px] sm:w-[320px] md:w-[420px] lg:w-[500px] xl:w-[540px] h-auto object-contain pointer-events-none drop-shadow-2xl max-w-[80vw] sm:max-w-none"
             />
           </Magnet>
         </FadeIn>

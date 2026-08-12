@@ -27,6 +27,13 @@ export const Magnet: React.FC<MagnetProps> = ({
     const handleMouseMove = (e: MouseEvent) => {
       if (!magnetRef.current) return;
 
+      // Disable magnetic tracking on mobile or touch devices for stability
+      if (window.innerWidth < 640 || window.matchMedia('(pointer: coarse)').matches) {
+        setIsHovered(false);
+        setPosition({ x: 0, y: 0 });
+        return;
+      }
+
       const rect = magnetRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
