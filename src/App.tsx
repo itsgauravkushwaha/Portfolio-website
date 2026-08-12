@@ -2,6 +2,7 @@ import React from 'react';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
 import { AboutSection } from './components/AboutSection';
+import { VideoSection } from './components/VideoSection';
 import { SkillsSection } from './components/SkillsSection';
 import { EducationSection } from './components/EducationSection';
 import { ServicesSection } from './components/ServicesSection';
@@ -13,6 +14,7 @@ export const App: React.FC = () => {
       <HeroSection />
       <MarqueeSection />
       <AboutSection />
+      <VideoSection />
       <SkillsSection />
       <EducationSection />
       <ServicesSection />
