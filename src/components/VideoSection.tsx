@@ -58,10 +58,10 @@ export const VideoSection: React.FC<VideoSectionProps> = ({
     <section id="showreel" className="bg-[#0C0C0C] py-20 sm:py-24 md:py-32 px-4 sm:px-8 md:px-10 w-full relative z-10">
       <div className="max-w-6xl mx-auto w-full flex flex-col items-center">
         {/* Section Heading */}
-        <FadeIn delay={0} y={40}>
+        <FadeIn delay={0} y={40} className="w-full flex justify-center px-2">
           <h2
-            style={{ fontSize: 'clamp(2.5rem, 9vw, 140px)' }}
-            className="hero-heading font-black uppercase text-center leading-none tracking-tight mb-8 sm:mb-14 select-none"
+            style={{ fontSize: 'clamp(1.6rem, 7.5vw, 130px)' }}
+            className="hero-heading font-black uppercase text-center leading-none tracking-tighter sm:tracking-tight mb-8 sm:mb-14 select-none max-w-full"
           >
             Inspirational Reel
           </h2>
