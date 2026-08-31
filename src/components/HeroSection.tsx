@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FadeIn } from './FadeIn';
 import { ContactButton } from './ContactButton';
 import { Magnet } from './Magnet';
+import { HeroCanvas } from './HeroCanvas';
 
 export const HeroSection: React.FC = () => {
   const scrollTo = (id: string) => {
@@ -14,6 +15,9 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative min-h-screen h-screen w-full flex flex-col justify-between overflow-x-clip bg-[#0C0C0C]">
+      {/* Three.js background */}
+      <HeroCanvas />
+
       {/* 1. Navbar */}
       <FadeIn delay={0} y={-20} className="w-full z-20">
         <nav className="flex justify-between items-center px-4 sm:px-6 md:px-10 pt-4 sm:pt-6 md:pt-8">
